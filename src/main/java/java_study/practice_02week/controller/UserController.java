@@ -2,6 +2,7 @@ package java_study.practice_02week.controller;
 
 import java_study.practice_02week.dto.UserRequestDto;
 import java_study.practice_02week.dto.UserResponseDto;
+import java_study.practice_02week.model.User;
 import java_study.practice_02week.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,5 +31,21 @@ public class UserController {
     public ResponseEntity<List<UserResponseDto>> getAllUsers() {
         List<UserResponseDto> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUser(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.getUser(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserResponseDto> updateUser(@PathVariable Long id, @RequestBody UserRequestDto dto) {
+        return ResponseEntity.ok(userService.updateUser(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<UserResponseDto> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 }
