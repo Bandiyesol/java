@@ -4,10 +4,9 @@ import java_study.practice_02week.dto.UserRequestDto;
 import java_study.practice_02week.dto.UserResponseDto;
 import java_study.practice_02week.model.User;
 import java_study.practice_02week.repository.UserRepository;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
 
 
 @Service
