@@ -1,11 +1,4 @@
 package java_study.practice_02week.dto;
 
-import lombok.Getter;
 
-
-@Getter
-public class UserRequestDto {
-    String username;
-    String email;
-    String password;
-}
+public record UserRequestDto(String username, String email, String password) {}

@@ -22,20 +22,19 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserResponseDto> createUser(@RequestBody UserRequestDto dto) {
-        UserResponseDto createdUser = userService.createUser(dto);
 
-        return ResponseEntity.ok(createdUser);
+        return ResponseEntity.ok(userService.createUser(dto));
     }
 
     @GetMapping
     public ResponseEntity<List<UserResponseDto>> getAllUsers() {
-        List<UserResponseDto> users = userService.getAllUsers();
-        return ResponseEntity.ok(users);
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable Long id) {
-        return ResponseEntity.ok(userService.getUser(id));
+    public ResponseEntity<UserResponseDto> getUser(@PathVariable Long id) {
+        User user = userService.getUser(id);
+        return ResponseEntity.ok(user.toResponseDto());
     }
 
     @PutMapping("/{id}")

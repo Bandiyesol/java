@@ -18,20 +18,20 @@ public class UserService {
     }
 
     public UserResponseDto createUser(UserRequestDto dto) {
-        if (userRepository.existsByEmail(dto.getEmail())) {
+        if (userRepository.existsByEmail(dto.email())) {
             throw new IllegalArgumentException("이미 등록된 이메일 입니다.");
         }
 
-        User user = new User(dto);
+        User user = User.from(dto);
         User savedUser = userRepository.save(user);
 
-        return new UserResponseDto(savedUser.getId(), savedUser.getUsername(), savedUser.getEmail(), savedUser.getPassword());
+        return savedUser.toResponseDto();
     }
 
     public List<UserResponseDto> getAllUsers() {
         return userRepository.findAll()
                 .stream()
-                .map(user -> new UserResponseDto(user.getId(), user.getUsername(), user.getEmail(), user.getPassword()))
+                .map(User::toResponseDto)
                 .collect(Collectors.toList());
     }
 
@@ -42,13 +42,10 @@ public class UserService {
 
     public UserResponseDto updateUser(Long id, UserRequestDto dto) {
         User user = getUser(id);
-        user.setUsername(dto.getUsername());
-        user.setEmail(dto.getEmail());
-        user.setPassword(dto.getPassword());
-
+        user.update(dto.username(), dto.email(), dto.password());
         User savedUser = userRepository.save(user);
 
-        return new UserResponseDto(savedUser.getId(), savedUser.getUsername(), savedUser.getEmail(), savedUser.getPassword());
+        return savedUser.toResponseDto();
     }
 
     public void deleteUser(Long id) {
